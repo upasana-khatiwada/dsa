@@ -1,0 +1,65 @@
+#include<stdio.h>
+#include<conio.h>
+#include<ctype.h>
+#define size 50
+char stack[size];
+int top= -1;
+push(char elem)
+{
+	stack[++top]=elem;
+}
+char pop()
+{
+	return (stack[top--]);
+}
+int pr(char symbol)
+{
+	if(symbol=='^')
+	{
+		return(3);
+	}
+	else if(symbol=='*'||symbol=='/')
+	{
+		return(2);
+		
+	}
+	else if(symbol=='+'||symbol=='-')
+	{
+		return(1);
+	}
+	else
+	{
+		return(0);
+	}
+}
+int main()
+{
+	int i;
+	char a[20],c,x;
+	printf("enter the expression");
+	gets(a);
+	printf("the postfix expression");
+	for(i=0;a[i]!='\0';i++){
+		c=a[i];
+		if (pr(c)>0){
+			while(top!=-1&&pr(stack[top])>=pr(c)){
+				printf("%c",pop());
+				
+			}
+			push(c);
+		}
+		else if (c==')'){
+			x=pop();
+			while(x!='('){
+				printf("%c",x);
+				x=pop();
+				
+			}
+		}
+		else if (c=='(')
+		push(c);
+		else
+		printf("%c",c);
+	}
+	return 0;
+}
